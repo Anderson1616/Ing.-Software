@@ -24,7 +24,7 @@
                     {% endfor %}
                 </div>
             {% endif %}
-            <form method="post" action="{% url 'register' %}">
+            <form method="post" action="{% url 'register' %}" onsubmit="return validatePasswords()">
                 {% csrf_token %}
                 <div class="form-group">
                     <label for="username">Nombre de Usuario</label>
@@ -34,6 +34,10 @@
                     <label for="password">Contraseña</label>
                     <input type="password" class="form-control" id="password" name="password" required>
                 </div>
+                <div class="form-group">
+                    <label for="confirm_password">Confirmar Contraseña</label>
+                    <input type="password" class="form-control" id="confirm_password" name="confirm_password" required>
+                </div>
                 <button type="submit" class="btn btn-primary btn-block" style="font-size: 18px;">Registrar</button>
             </form>
             <a href="{% url 'signup' %}" class="btn btn-secondary btn-block" style="font-size: 18px; margin-top: 10px;">Regresar</a>
@@ -42,5 +46,16 @@
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        function validatePasswords() {
+            var password = document.getElementById('password').value;
+            var confirmPassword = document.getElementById('confirm_password').value;
+            if (password !== confirmPassword) {
+                alert('Las contraseñas no coinciden.');
+                return false;
+            }
+            return true;
+        }
+    </script>
 </body>
 </html>

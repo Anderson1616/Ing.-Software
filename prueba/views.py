@@ -15,19 +15,19 @@ def home(request): #Por algún motivo si quito esto me da error la aplicación
    return render(request, 'home.html', {'pedidos': pedidos})
 
 @login_required
-@never_cache
+
 def crud_pedidos(request):
     pedidos = Pedido.objects.all()
     return render(request, 'crud_pedidos.html', {'pedidos': pedidos})
 
 @login_required
-@never_cache
+
 def crud_conductores(request):
     conductores = Conductor.objects.all()
     return render(request, 'crud_conductores.html', {'conductores': conductores})
 
 @login_required
-@never_cache
+
 def crud_camion(request):
     camiones = Camion.objects.all()
     return render(request, 'crud_camion.html', {'camiones': camiones})
@@ -101,7 +101,7 @@ def logout_view(request):
     return redirect('signup')
 
 @login_required
-@never_cache
+
 def agregar_pedido_view(request):
     conductores = Conductor.objects.all()
     if request.method == 'POST':
@@ -134,13 +134,13 @@ def agregar_pedido_view(request):
     return render(request, 'agregar_pedido.html', {'conductores': conductores})
 
 @login_required
-@never_cache
+
 def ver_informacion(request, pedido_id):
     pedido = get_object_or_404(Pedido, id=pedido_id)
     return render(request, 'ver_informacion.html', {'pedido': pedido})
 
 @login_required
-@never_cache
+
 def editar_pedido(request, pedido_id):
     pedido = get_object_or_404(Pedido, id=pedido_id)
     conductores = Conductor.objects.all()
@@ -166,7 +166,7 @@ def editar_pedido(request, pedido_id):
     return render(request, 'editar.html', {'pedido': pedido, 'conductores': conductores})
 
 @login_required
-@never_cache
+
 def eliminar_pedido(request, pedido_id):
     pedido = get_object_or_404(Pedido, id=pedido_id)
     try:
@@ -177,7 +177,7 @@ def eliminar_pedido(request, pedido_id):
     return redirect('home')
 
 @login_required
-@never_cache
+
 def agregar_conductor(request):
     if request.method == 'POST':
         nombre = request.POST.get('nombre')
@@ -198,7 +198,7 @@ def agregar_conductor(request):
     return render(request, 'agregar_conductor.html')
 
 @login_required
-@never_cache
+
 def agregar_camion(request):
     if request.method == 'POST':
         modelo = request.POST.get('modelo')
@@ -220,7 +220,7 @@ def agregar_camion(request):
 
 
 @login_required
-@never_cache
+
 def eliminar_conductor(request, conductor_id):
     conductor = get_object_or_404(Conductor, id=conductor_id)
     try:
@@ -231,7 +231,7 @@ def eliminar_conductor(request, conductor_id):
     return redirect('crud_conductores')
 
 @login_required
-@never_cache
+
 def eliminar_camion(request, camion_id):
     camion = get_object_or_404(Camion, id=camion_id)
     try:
@@ -242,7 +242,7 @@ def eliminar_camion(request, camion_id):
     return redirect('crud_camion')
 
 @login_required
-@never_cache
+
 def editar_conductor(request, conductor_id):
     conductor = get_object_or_404(Conductor, id=conductor_id)
     
@@ -262,7 +262,7 @@ def editar_conductor(request, conductor_id):
     return render(request, 'editar_conductor.html', {'conductor': conductor})
 
 @login_required
-@never_cache
+
 def editar_camion(request, camion_id):
     camion = get_object_or_404(Camion, id=camion_id)
     
@@ -283,14 +283,14 @@ def editar_camion(request, camion_id):
 
 
 @login_required
-@never_cache
+
 def ver_info_conductor(request, conductor_id):
     conductor = get_object_or_404(Conductor, id=conductor_id)
     return render(request, 'ver_info_conductor.html', {'conductor': conductor})
  
 
 @login_required
-@never_cache
+
 def ver_info_camion(request, camion_id):
     camion = get_object_or_404(Camion, id=camion_id)
     return render(request, 'ver_info_camion.html', {'camion': camion})

@@ -15,8 +15,27 @@
                 <p><strong>Nombre:</strong> {{ conductor.nombre }}</p>
                 <p><strong>Primer apellido:</strong> {{ conductor.apellido1 }}</p>
                 <p><strong>Segundo apellido:</strong> {{ conductor.apellido2 }}</p>
-        
-                <a href="{% url 'crud_conductores' %}" class="btn btn-primary">Volver</a>
+                
+                <h5 class="card-title mt-4">Viajes Asociados</h5>
+                {% if pedidos %}
+                    <ul class="list-group">
+                        {% for pedido in pedidos %}
+                            <li class="list-group-item">
+                                <p><strong>Camión:</strong> {{ pedido.camion }}</p>
+                                <p><strong>Modelo:</strong> {{ pedido.modelo }}</p>
+                                <p><strong>Material:</strong> {{ pedido.material }}</p>
+                                <p><strong>Cliente:</strong> {{ pedido.cliente }}</p>
+                                <p><strong>Ruta:</strong> {{ pedido.ruta }}</p>
+                                <p><strong>Estado:</strong> {{ pedido.estado }}</p>
+                                <p><strong>Fecha del pedido:</strong> {{ pedido.fecha_pedido }}</p>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    <p>No hay viajes asociados a este conductor.</p>
+                {% endif %}
+
+                <a href="{% url 'crud_conductores' %}" class="btn btn-primary mt-4">Volver</a>
             </div>
         </div>
     </div>

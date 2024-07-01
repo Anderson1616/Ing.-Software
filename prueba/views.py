@@ -174,7 +174,7 @@ def eliminar_pedido(request, pedido_id):
         messages.success(request, 'Pedido eliminado exitosamente.')
     except Exception as e:
         messages.error(request, f'Error: {str(e)}')
-    return redirect('home')
+    return redirect('crud_pedidos')
 
 @login_required
 
@@ -283,10 +283,11 @@ def editar_camion(request, camion_id):
 
 
 @login_required
-
 def ver_info_conductor(request, conductor_id):
     conductor = get_object_or_404(Conductor, id=conductor_id)
-    return render(request, 'ver_info_conductor.html', {'conductor': conductor})
+    pedidos = Pedido.objects.filter(conductor=conductor)
+    return render(request, 'ver_info_conductor.html', {'conductor': conductor, 'pedidos': pedidos})
+
  
 
 @login_required

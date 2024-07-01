@@ -33,6 +33,7 @@
                     <th>Modelo</th>
                     <th>Tipo / Marca</th>
                     <th>Placa del camión</th>
+                    <th>Acciones</th>
                 </tr>
             </thead>
             <tbody>
@@ -42,7 +43,7 @@
                     <td>{{ camion.tipoMarca }}</td>
                     <td>{{ camion.placa }}</td>
                     <td>
-                        <button class="btn btn-info btn-sm" onclick="location.href='{% url 'ver_info_camion' camion.id %}'">Ver Información del Camión</button>
+                        
                         <button class="btn btn-success btn-sm" onclick="location.href='{% url 'editar_camion' camion.id %}'">Editar</button>
                         <button class="btn btn-danger btn-sm" onclick="eliminarCamion('{{ camion.id }}')">Eliminar</button>
                     </td>

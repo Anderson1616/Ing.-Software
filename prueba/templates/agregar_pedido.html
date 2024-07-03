@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agregar Pedido</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="mb-4">Agregar Pedido</h1>
+        <form method="POST">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="camion">Placa</label>
+                <input type="text" class="form-control" id="camion" name="camion" required>
+            </div>
+            <div class="form-group">
+                <label for="modelo">Modelo</label>
+                <input type="text" class="form-control" id="modelo" name="modelo" required>
+            </div>
+            <div class="form-group">
+                <label for="material">Material</label>
+                <input type="text" class="form-control" id="material" name="material" required>
+            </div>
+            <div class="form-group">
+                <label for="cliente">Cliente</label>
+                <input type="text" class="form-control" id="cliente" name="cliente" required>
+            </div>
+            <div class="form-group">
+                <label for="conductor">Conductor</label>
+                <select class="form-control" id="conductor" name="conductor" required>
+                    <option value="" disabled selected hidden>Seleccione un conductor</option>
+                    {% for conductor in conductores %}
+                        <option value="{{ conductor.id }}">{{ conductor.nombre }} {{ conductor.apellido1 }} {{ conductor.apellido2 }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="ruta">Ruta</label>
+                <input type="text" class="form-control" id="ruta" name="ruta" required>
+            </div>
+            <div class="form-group">
+                <label for="estado">Estado</label>
+                <select class="form-control" id="estado" name="estado" required>
+                    <option value="" disabled selected hidden>Seleccione el estado</option>
+                    <option value="En Proceso" >En Proceso</option>
+                    <option value="Finalizado">Finalizado</option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary">Agregar</button>
+            <button type="button" class="btn btn-secondary" onclick="location.href='{% url 'crud_pedidos' %}'">Cancelar</button>
+        </form>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
+

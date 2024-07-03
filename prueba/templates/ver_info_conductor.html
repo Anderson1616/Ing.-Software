@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Información del conductor</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="mb-4">Información del conductor</h1>
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Información del Conductor</h5>
+                <p><strong>Nombre:</strong> {{ conductor.nombre }}</p>
+                <p><strong>Primer apellido:</strong> {{ conductor.apellido1 }}</p>
+                <p><strong>Segundo apellido:</strong> {{ conductor.apellido2 }}</p>
+                
+                <h5 class="card-title mt-4">Viajes Asociados</h5>
+                {% if pedidos %}
+                    <ul class="list-group">
+                        {% for pedido in pedidos %}
+                            <li class="list-group-item">
+                                <p><strong>Camión:</strong> {{ pedido.camion }}</p>
+                                <p><strong>Modelo:</strong> {{ pedido.modelo }}</p>
+                                <p><strong>Material:</strong> {{ pedido.material }}</p>
+                                <p><strong>Cliente:</strong> {{ pedido.cliente }}</p>
+                                <p><strong>Ruta:</strong> {{ pedido.ruta }}</p>
+                                <p><strong>Estado:</strong> {{ pedido.estado }}</p>
+                                <p><strong>Fecha del pedido:</strong> {{ pedido.fecha_pedido }}</p>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    <p>No hay viajes asociados a este conductor.</p>
+                {% endif %}
+
+                <a href="{% url 'crud_conductores' %}" class="btn btn-primary mt-4">Volver</a>
+            </div>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

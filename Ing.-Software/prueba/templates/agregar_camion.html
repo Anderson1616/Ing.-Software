@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agregar Camión</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        :root {
+            --primary-color: #2C3E50; /* Azul oscuro */
+            --secondary-color: #18BC9C; /* Verde menta */
+            --background-color: #ECF0F1; /* Gris claro */
+        }
+        body {
+            background-color: var(--background-color);
+            color: var(--primary-color);
+        }
+        .btn-primary {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+            color: var(--background-color);
+        }
+        .btn-primary:hover {
+            background-color: #1A242F; /* Versión más oscura del azul oscuro */
+            border-color: #1A242F;
+        }
+        .container {
+            background-color: #ffffff;
+            border: 1px solid #e0e0e0;
+            border-radius: 5px;
+            padding: 20px;
+            margin-top: 60px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .form-control {
+            border-color: #e0e0e0;
+        }
+        label {
+            color: var(--primary-color);
+        }
+        h1 {
+            color: var(--primary-color);
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="mb-4">Agregar Camión</h1>
+        <form method="POST" action="{% url 'agregar_camion' %}">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="modelo">Modelo</label>
+                <input type="text" class="form-control" id="modelo" name="modelo" required>
+            </div>
+            <div class="form-group">
+                <label for="tipoMarca">Tipo/ Marca</label>
+                <input type="text" class="form-control" id="tipoMarca" name="tipoMarca" required>
+            </div>
+            <div class="form-group">
+                <label for="placa">Número de Placa</label>
+                <input type="text" class="form-control" id="placa" name="placa" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Agregar</button>
+            <button type="button" class="btn btn-secondary" onclick="location.href='{% url 'crud_camion' %}'">Cancelar</button>
+
+        </form>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

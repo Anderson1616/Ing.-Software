@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro de Camiones</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'prueba/styles.css' %}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        :root {
+            --primary-color: #2C3E50; /* Azul oscuro */
+            --secondary-color: #18BC9C; /* Verde menta */
+            --background-color: #ECF0F1; /* Gris claro */
+        }
+        body {
+            background-color: var(--background-color);
+            color: var(--primary-color);
+        }
+        .navbar {
+            background-color: var(--primary-color) !important;
+        }
+        .navbar-brand, .nav-link {
+            color: var(--background-color) !important;
+        }
+        .btn-primary {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+            color: var(--background-color);
+        }
+        .btn-primary:hover {
+            background-color: #1A242F; /* Versión más oscura del azul oscuro */
+            border-color: #1A242F;
+        }
+        .container {
+            background-color: #ffffff;
+            border: 1px solid #e0e0e0;
+            border-radius: 5px;
+            padding: 20px;
+            margin-top: 60px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .container img {
+            display: block;
+            margin: 0 auto 20px;
+        }
+        .btn {
+            color: var(--background-color);
+        }
+        .btn-secondary, .btn-info, .btn-success, .btn-danger {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+        .btn-secondary:hover, .btn-info:hover, .btn-success:hover, .btn-danger:hover {
+            background-color: #1A242F; /* Versión más oscura del azul oscuro */
+            border-color: #1A242F;
+        }
+        h1, .table th, .table td {
+            color: var(--primary-color);
+        }
+        .form-control {
+            border-color: #e0e0e0;
+        }
+        label {
+            color: var(--primary-color);
+        }
+        .alert-info {
+            background-color: #d1ecf1;
+            border-color: #bee5eb;
+            color: #0c5460;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light w-100" style="position: fixed; top: 0; left: 0; right: 0; padding: 1rem; text-align: center;">
+        <a class="navbar-brand" href="#">
+            <img src="{% static 'prueba/logo.png'%}" width="40" height="40" alt="Logo">
+            <span class="ml-2">Gestión de Pedidos y Flota</span>
+        </a>
+        <div class="collapse navbar-collapse">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'logout' %}">Cerrar Sesión</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h1 class="mb-4">Registro de Camiones</h1>
+
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <form method="get" action="{% url 'buscar_pedidos' %}">
+                    <div class="input-group">
+                        <input type="date" name="fecha" class="form-control" placeholder="Buscar por fecha">
+                        <div class="input-group-append">
+                            <button class="btn btn-primary" type="submit">Buscar</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="col-md-6 text-right">
+                <button class="btn btn-primary" onclick="location.href='{% url 'agregar_pedido' %}'">Agregar Pedido</button>
+            </div>
+        </div>
+
+        {% if mensaje %}
+        <div class="alert alert-info" role="alert">
+            {{ mensaje }}
+        </div>
+        {% endif %}
+
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Placa</th>
+                    <th>Conductor</th>
+                    <th>Ruta</th>
+                    <th>Estado</th>
+                    <th>Fecha Pedido</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for pedido in pedidos %}
+                <tr id="pedido-{{ pedido.id }}">
+                    <td>{{ pedido.camion }}</td>
+                    <td>{{ pedido.conductor }}</td>
+                    <td>{{ pedido.ruta }}</td>
+                    <td>{{ pedido.estado }}</td>
+                    <td>{{ pedido.fecha_pedido }}</td>
+                    <td>
+                        <button class="btn btn-info btn-sm" onclick="location.href='{% url 'ver_informacion' pedido.id %}'">Ver Más Información</button>
+                        <button class="btn btn-success btn-sm" onclick="location.href='{% url 'editar_pedido' pedido.id %}'">Editar</button>
+                        <button class="btn btn-danger btn-sm" onclick="eliminarPedido('{{ pedido.id }}')">Eliminar</button>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <button type="button" class="btn btn-secondary" onclick="location.href='{% url 'home' %}'">Volver a inicio</button>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script>
+        function eliminarPedido(pedidoId) {
+            if (confirm('¿Estás seguro de que deseas eliminar este pedido?')) {
+                $.ajax({
+                    url: '{% url "eliminar_pedido" 0 %}'.slice(0, -2) + pedidoId + '/',
+                    type: 'POST',
+                    data: {
+                        'csrfmiddlewaretoken': '{{ csrf_token }}'
+                    },
+                    success: function() {
+                        $('#pedido-' + pedidoId).remove();
+                    },
+                    error: function() {
+                        alert('Ocurrió un error. Inténtalo de nuevo.');
+                    }
+                });
+            }
+        }
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

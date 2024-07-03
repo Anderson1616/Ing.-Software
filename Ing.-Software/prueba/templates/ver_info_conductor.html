@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Información del conductor</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'prueba/styles.css' %}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        :root {
+            --primary-color: #2C3E50; /* Azul oscuro */
+            --secondary-color: #18BC9C; /* Verde menta */
+            --background-color: #ECF0F1; /* Gris claro */
+        }
+        body {
+            background-color: var(--background-color);
+            color: var(--primary-color);
+        }
+        .navbar {
+            background-color: var(--primary-color) !important;
+        }
+        .navbar-brand, .nav-link {
+            color: var(--background-color) !important;
+        }
+        .btn-primary {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+            color: var(--background-color);
+        }
+        .btn-primary:hover {
+            background-color: #1A242F; /* Versión más oscura del azul oscuro */
+            border-color: #1A242F;
+        }
+        .container {
+            background-color: #ffffff;
+            border: 1px solid #e0e0e0;
+            border-radius: 5px;
+            padding: 20px;
+            margin-top: 60px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        h1, h5, .card-title {
+            color: var(--primary-color);
+        }
+        .card {
+            border-color: var(--primary-color);
+        }
+        .list-group-item {
+            border-color: var(--primary-color);
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light w-100" style="position: fixed; top: 0; left: 0; right: 0; padding: 1rem; text-align: center;">
+        <a class="navbar-brand" href="#">
+            <img src="{% static 'prueba/logo.png'%}" width="40" height="40" alt="Logo">
+            <span class="ml-2">Gestión de Pedidos y Flota</span>
+        </a>
+        <div class="collapse navbar-collapse">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'logout' %}">Cerrar Sesión</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h1 class="mb-4">Información del conductor</h1>
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Información del Conductor</h5>
+                <p><strong>Nombre:</strong> {{ conductor.nombre }}</p>
+                <p><strong>Primer apellido:</strong> {{ conductor.apellido1 }}</p>
+                <p><strong>Segundo apellido:</strong> {{ conductor.apellido2 }}</p>
+                
+                <h5 class="card-title mt-4">Viajes Asociados</h5>
+                {% if pedidos %}
+                    <ul class="list-group">
+                        {% for pedido in pedidos %}
+                            <li class="list-group-item">
+                                <p><strong>Camión:</strong> {{ pedido.camion }}</p>
+                                <p><strong>Modelo:</strong> {{ pedido.modelo }}</p>
+                                <p><strong>Material:</strong> {{ pedido.material }}</p>
+                                <p><strong>Cliente:</strong> {{ pedido.cliente }}</p>
+                                <p><strong>Ruta:</strong> {{ pedido.ruta }}</p>
+                                <p><strong>Estado:</strong> {{ pedido.estado }}</p>
+                                <p><strong>Fecha del pedido:</strong> {{ pedido.fecha_pedido }}</p>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    <p>No hay viajes asociados a este conductor.</p>
+                {% endif %}
+
+                <a href="{% url 'crud_conductores' %}" class="btn btn-primary mt-4">Volver</a>
+            </div>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
